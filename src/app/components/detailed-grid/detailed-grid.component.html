@@ -1,0 +1,88 @@
+<div class="grid-wrapper">
+  <div class="grid-scroll-container">
+    <table class="detail-grid">
+      <colgroup>
+        <col class="col-category">
+        <col class="col-subject">
+        @for (student of students; track student.id) {
+          <col class="col-mark">
+          <col class="col-mark">
+          <col class="col-mark">
+        }
+      </colgroup>
+
+      <thead>
+        <tr class="header-row">
+          <!-- Subject + sort — spans all 4 visual header rows in height -->
+          <th colspan="2" class="subject-header">
+            <div class="subject-header-content">
+              <span class="subject-label">Subjects</span>
+              <button class="sort-btn" (click)="toggleSort()" [title]="sortTitle" [attr.aria-label]="sortTitle">
+                <span class="sort-icon">{{ sortIcon }}</span>
+              </button>
+            </div>
+          </th>
+
+          <!-- Per-student header — all 4 visual rows as nested divs inside one th -->
+          @for (student of students; track student.id) {
+            <th colspan="3" class="student-header">
+              <div class="student-header-inner">
+                <div class="sh-row sh-name">{{ student.name }}</div>
+                <div class="sh-row sh-terms">
+                  <span>Current</span>
+                  <span>Short Term</span>
+                  <span>Mid Term</span>
+                </div>
+                <div class="sh-row sh-pcts">
+                  <span>{{ student.percentages.current }}%</span>
+                  <span>{{ student.percentages.shortTerm }}%</span>
+                  <span>{{ student.percentages.midTerm }}%</span>
+                </div>
+                <div class="sh-row sh-levels">
+                  <span>Basic</span>
+                  <span>Advanced</span>
+                  <span>Expert</span>
+                </div>
+              </div>
+            </th>
+          }
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (category of displayCategories; track category.id; let isLastCat = $last) {
+          @for (subject of category.subjects; track subject.id; let subIdx = $index; let isLastSub = $last) {
+            <tr [class.category-last-row]="isLastSub && !isLastCat">
+              @if (subIdx === 0) {
+                <td [attr.rowspan]="category.subjects.length" class="category-cell">
+                  <span class="category-name">{{ category.name }}</span>
+                </td>
+              }
+              <td class="subject-cell">{{ subject.name }}</td>
+              @for (student of students; track student.id) {
+                <td class="mark-cell">
+                  <input type="number"
+                         [(ngModel)]="getMark(subject.id, student.id).basic"
+                         min="0" max="100"
+                         placeholder="—">
+                </td>
+                <td class="mark-cell">
+                  <input type="number"
+                         [(ngModel)]="getMark(subject.id, student.id).advanced"
+                         min="0" max="100"
+                         placeholder="—">
+                </td>
+                <td class="mark-cell">
+                  <input type="number"
+                         [(ngModel)]="getMark(subject.id, student.id).expert"
+                         min="0" max="100"
+                         placeholder="—">
+                </td>
+              }
+            </tr>
+          }
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
