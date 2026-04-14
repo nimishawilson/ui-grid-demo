@@ -219,19 +219,11 @@ td.stu-sep {
     background: $label-row-bg;
   }
 
-  .basic-label {
-    color: $basic-text;
-    background: $basic-bg;
-  }
-
-  .adv-label {
-    color: $adv-text;
-    background: $adv-bg;
-  }
-
+  .basic-label,
+  .adv-label,
   .exp-label {
-    color: $exp-text;
-    background: $exp-bg;
+    color: #374151;
+    background: $label-row-bg;
   }
 }
 
