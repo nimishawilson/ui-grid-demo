@@ -160,6 +160,40 @@ thead .header-row th {
   font-size: 13px;
   font-weight: 600;
   border-bottom: 1px solid $border-header;
+  gap: 6px;
+  padding: 0 6px;
+
+  .sh-name-text {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+  }
+}
+
+.sh-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+  color: $header-text;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.15s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  svg {
+    display: block;
+  }
 }
 
 .sh-terms {
