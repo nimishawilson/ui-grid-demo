@@ -1,5 +1,7 @@
 <div class="grid-wrapper">
-  <div class="grid-scroll-container">
+
+  <!-- ── Fixed header table (never scrolls) ── -->
+  <div class="grid-header-container">
     <table class="detail-grid">
       <colgroup>
         <col class="col-category">
@@ -10,10 +12,8 @@
           <col class="col-mark">
         }
       </colgroup>
-
       <thead>
         <tr class="header-row">
-          <!-- Subject + sort — spans all 4 visual header rows in height -->
           <th colspan="2" class="subject-header">
             <div class="subject-header-content">
               <span class="subject-label">Subjects</span>
@@ -22,8 +22,6 @@
               </button>
             </div>
           </th>
-
-          <!-- Per-student header — all 4 visual rows as nested divs inside one th -->
           @for (student of students; track student.id) {
             <th colspan="3" class="student-header">
               <div class="student-header-inner">
@@ -62,7 +60,21 @@
           }
         </tr>
       </thead>
+    </table>
+  </div>
 
+  <!-- ── Scrollable body table ── -->
+  <div class="grid-body-container">
+    <table class="detail-grid">
+      <colgroup>
+        <col class="col-category">
+        <col class="col-subject">
+        @for (student of students; track student.id) {
+          <col class="col-mark">
+          <col class="col-mark">
+          <col class="col-mark">
+        }
+      </colgroup>
       <tbody>
         @for (category of displayCategories; track category.id; let isLastCat = $last) {
           @for (subject of category.subjects; track subject.id; let subIdx = $index; let isLastSub = $last) {
@@ -99,4 +111,5 @@
       </tbody>
     </table>
   </div>
+
 </div>

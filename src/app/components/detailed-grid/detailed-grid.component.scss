@@ -29,11 +29,25 @@ $cat-sep-color:   #3a3a3a;
   background: #fff;
 }
 
-.grid-scroll-container {
-  width: 100%;
+// Header container — never scrolls vertically.
+// overflow-y: scroll reserves the same scrollbar-width gutter as the body
+// so columns stay aligned; the scrollbar itself is hidden via CSS.
+.grid-header-container {
+  flex-shrink: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scrollbar-width: none; // Firefox
+
+  &::-webkit-scrollbar {
+    display: none; // Chrome / Safari
+  }
+}
+
+// Body container — only this scrolls
+.grid-body-container {
   flex: 1;
   overflow-y: auto;
-  overflow-x: auto;
+  overflow-x: hidden;
 }
 
 // ── Table base ────────────────────────────────────────────────────────────────
@@ -51,11 +65,8 @@ $cat-sep-color:   #3a3a3a;
 .col-subject  { width: 140px; }
 .col-mark     { /* equal share of remaining width */ }
 
-// ── Single sticky header row ──────────────────────────────────────────────────
+// ── Header row ───────────────────────────────────────────────────────────────
 thead .header-row th {
-  position: sticky;
-  top: 0;
-  z-index: 3;
   padding: 0;
   vertical-align: top;
   border-right: 1px solid $border-header;
@@ -64,7 +75,6 @@ thead .header-row th {
 
   &:first-child {
     border-left: 1px solid $border-header;
-    z-index: 4; // subject header stays above student headers
   }
 }
 
@@ -242,6 +252,10 @@ tbody {
 
     td:first-child {
       border-left: 1px solid $border-body;
+    }
+
+    &:first-child td {
+      border-top: 1px solid $border-body;
     }
   }
 
