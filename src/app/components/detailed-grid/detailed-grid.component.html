@@ -87,12 +87,15 @@
               @if (subIdx === 0) {
                 <td [attr.rowspan]="category.subjects.length" class="category-cell">
                   <span class="category-name"
-                        [title]="categoryTooltip(category.name)">
-                    {{ categoryDisplay(category.name) }}
+                        [title]="truncateTooltip(category.name)">
+                    {{ truncate(category.name) }}
                   </span>
                 </td>
               }
-              <td class="subject-cell">{{ subject.name }}</td>
+              <td class="subject-cell"
+                  [title]="truncateTooltip(subject.name)">
+                {{ truncate(subject.name) }}
+              </td>
               @for (student of students; track student.id) {
                 <td class="mark-cell">
                   <input type="number"

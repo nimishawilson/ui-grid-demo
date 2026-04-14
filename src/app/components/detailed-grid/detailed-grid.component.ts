@@ -65,16 +65,16 @@ export class DetailedGridComponent implements OnChanges, OnInit {
     this.updateDisplayCategories();
   }
 
-  readonly categoryMaxChars = 13;
+  readonly maxLabelChars = 13;
 
-  categoryDisplay(name: string): string {
-    return name.length > this.categoryMaxChars
-      ? name.slice(0, this.categoryMaxChars) + '…'
+  truncate(name: string): string {
+    return name.length > this.maxLabelChars
+      ? name.slice(0, this.maxLabelChars) + '…'
       : name;
   }
 
-  categoryTooltip(name: string): string {
-    return name.length > this.categoryMaxChars ? name : '';
+  truncateTooltip(name: string): string {
+    return name.length > this.maxLabelChars ? name : '';
   }
 
   getMark(subjectId: string, studentId: string): SubjectMark {
