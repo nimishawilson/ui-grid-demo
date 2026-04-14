@@ -61,9 +61,12 @@ $cat-sep-color:   #3a3a3a;
 }
 
 // ── Column widths ─────────────────────────────────────────────────────────────
+$col-icon-w: 30px;
+
 .col-category { width: 36px; }
 .col-subject  { width: 140px; }
 .col-mark     { /* equal share of remaining width */ }
+.col-icon     { width: $col-icon-w; }
 
 // ── Header row ───────────────────────────────────────────────────────────────
 thead .header-row th {
@@ -146,7 +149,7 @@ thead .header-row th {
   flex-shrink: 0;
   overflow: hidden;
 
-  // Sub-column dividers for rows that have 3 spans
+  // Sub-column dividers (terms / pcts / levels)
   span {
     flex: 1;
     display: flex;
@@ -161,6 +164,12 @@ thead .header-row th {
     &:last-child {
       border-right: none;
     }
+  }
+
+  // Fixed-width placeholder for the icon column in header sub-rows
+  .sh-icon-col {
+    flex: 0 0 $col-icon-w;
+    width: $col-icon-w;
   }
 }
 
@@ -290,6 +299,33 @@ tbody {
     color: #2d3748;
     background: $subject-bg;
     border-right: 2px solid $border-body;
+  }
+
+  // ── Row action icon cell ─────────────────────────────────────────────────
+  .row-icon-cell {
+    text-align: center;
+    vertical-align: middle;
+    padding: 0;
+  }
+
+  .row-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    background: none;
+    border: none;
+    border-radius: 4px;
+    color: #888;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.15s, color 0.15s;
+
+    &:hover {
+      background: #e8e8e8;
+      color: #333;
+    }
   }
 
   // ── Mark input cell ───────────────────────────────────────────────────────
