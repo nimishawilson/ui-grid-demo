@@ -1,7 +1,5 @@
 <div class="grid-wrapper">
-
-  <!-- ── Fixed header table (never scrolls) ── -->
-  <div class="grid-header-container">
+  <div class="scroll-container">
     <table class="compare-grid">
       <colgroup>
         <col class="col-profile">
@@ -11,6 +9,8 @@
           <col class="col-sub">
         }
       </colgroup>
+
+      <!-- ── Sticky header ── -->
       <thead>
         <tr>
           <th class="th-profiles">
@@ -42,24 +42,12 @@
           }
         </tr>
       </thead>
-    </table>
-  </div>
 
-  <!-- ── Scrollable body table ── -->
-  <div class="grid-body-container">
-    <table class="compare-grid">
-      <colgroup>
-        <col class="col-profile">
-        @for (student of students; track student.id) {
-          <col class="col-sub">
-          <col class="col-sub">
-          <col class="col-sub">
-        }
-      </colgroup>
+      <!-- ── Scrollable body ── -->
       <tbody>
         @for (profile of displayProfiles; track profile.id; let isLast = $last) {
-          <!-- Row 1: profile name (rowspan=2) + "Basic | Advanced | Expert" labels per student -->
-          <tr class="row-labels" [class.profile-last]="isLast">
+          <!-- Row 1: profile name (rowspan=2) + level labels per student -->
+          <tr class="row-labels">
             <td rowspan="2" class="profile-cell" [title]="profile.name">
               <span class="profile-name">{{ profile.name }}</span>
             </td>
@@ -69,7 +57,7 @@
               <td class="label-cell exp-label" [class.stu-sep]="!isLastStu">Expert</td>
             }
           </tr>
-          <!-- Row 2: values per student -->
+          <!-- Row 2: data values per student -->
           <tr class="row-values" [class.profile-sep]="!isLast">
             @for (student of students; track student.id; let isLastStu = $last) {
               <td class="val-cell change-cell" [class]="'val-cell change-cell ' + changeClass(getEntry(profile.id, student.id).basicValue)">{{ getEntry(profile.id, student.id).basicValue }}</td>
@@ -81,5 +69,4 @@
       </tbody>
     </table>
   </div>
-
 </div>
