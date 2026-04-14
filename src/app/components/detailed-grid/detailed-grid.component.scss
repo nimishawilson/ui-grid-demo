@@ -30,16 +30,21 @@ $cat-sep-color:   #3a3a3a;
 }
 
 // Header container — never scrolls vertically.
-// overflow-y: scroll reserves the same scrollbar-width gutter as the body
-// so columns stay aligned; the scrollbar itself is hidden via CSS.
+// overflow-y: scroll reserves the scrollbar gutter so the header table width
+// matches the body table width exactly. The scrollbar is made transparent
+// (NOT display:none — that would remove its layout space and cause misalignment).
 .grid-header-container {
   flex-shrink: 0;
   overflow-y: scroll;
   overflow-x: hidden;
-  scrollbar-width: none; // Firefox
+  scrollbar-color: transparent transparent; // Firefox: invisible but keeps gutter
 
   &::-webkit-scrollbar {
-    display: none; // Chrome / Safari
+    background-color: transparent; // Chrome/Safari: keeps layout space, invisible
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
   }
 }
 
@@ -288,6 +293,7 @@ tbody {
       text-transform: uppercase;
       letter-spacing: 1px;
       padding: 6px 0;
+      margin: 0 auto;
     }
   }
 

@@ -65,6 +65,18 @@ export class DetailedGridComponent implements OnChanges, OnInit {
     this.updateDisplayCategories();
   }
 
+  readonly categoryMaxChars = 13;
+
+  categoryDisplay(name: string): string {
+    return name.length > this.categoryMaxChars
+      ? name.slice(0, this.categoryMaxChars) + '…'
+      : name;
+  }
+
+  categoryTooltip(name: string): string {
+    return name.length > this.categoryMaxChars ? name : '';
+  }
+
   getMark(subjectId: string, studentId: string): SubjectMark {
     if (!this.marksMap[subjectId]) {
       this.marksMap[subjectId] = {};
