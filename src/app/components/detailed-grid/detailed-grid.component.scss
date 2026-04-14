@@ -6,19 +6,19 @@ $sh-levels-h: 30px;
 $header-h: $sh-name-h + $sh-terms-h + $sh-pcts-h + $sh-levels-h; // 130px
 
 // ── Color palette ─────────────────────────────────────────────────────────────
-$header-bg-1:     #1e3a5f;
-$header-bg-2:     #274a75;
-$header-bg-3:     #2f5688;
-$header-bg-4:     #36618e;
+$header-bg-1:     #3a3a3a;
+$header-bg-2:     #4a4a4a;
+$header-bg-3:     #595959;
+$header-bg-4:     #666666;
 $header-text:     #ffffff;
-$header-subtext:  #b8d4f0;
-$border-header:   #1a2e45;
-$border-body:     #d8e2ec;
-$border-category: #1e3a5f;
-$category-bg:     #eef3f9;
-$subject-bg:      #f8fafc;
-$row-hover:       #eef6ff;
-$cat-sep-color:   #1e3a5f;
+$header-subtext:  #d4d4d4;
+$border-header:   #2a2a2a;
+$border-body:     #dcdcdc;
+$border-category: #3a3a3a;
+$category-bg:     #f2f2f2;
+$subject-bg:      #fafafa;
+$row-hover:       #f5f5f5;
+$cat-sep-color:   #3a3a3a;
 
 // ── Wrapper ───────────────────────────────────────────────────────────────────
 .grid-wrapper {
@@ -29,11 +29,30 @@ $cat-sep-color:   #1e3a5f;
   background: #fff;
 }
 
-.grid-scroll-container {
-  width: 100%;
+// Header container — never scrolls vertically.
+// overflow-y: scroll reserves the scrollbar gutter so the header table width
+// matches the body table width exactly. The scrollbar is made transparent
+// (NOT display:none — that would remove its layout space and cause misalignment).
+.grid-header-container {
+  flex-shrink: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scrollbar-color: transparent transparent; // Firefox: invisible but keeps gutter
+
+  &::-webkit-scrollbar {
+    background-color: transparent; // Chrome/Safari: keeps layout space, invisible
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+}
+
+// Body container — only this scrolls
+.grid-body-container {
   flex: 1;
   overflow-y: auto;
-  overflow-x: auto;
+  overflow-x: hidden;
 }
 
 // ── Table base ────────────────────────────────────────────────────────────────
@@ -47,15 +66,15 @@ $cat-sep-color:   #1e3a5f;
 }
 
 // ── Column widths ─────────────────────────────────────────────────────────────
+$col-icon-w: 30px;
+
 .col-category { width: 36px; }
 .col-subject  { width: 140px; }
 .col-mark     { /* equal share of remaining width */ }
+.col-icon     { width: $col-icon-w; }
 
-// ── Single sticky header row ──────────────────────────────────────────────────
+// ── Header row ───────────────────────────────────────────────────────────────
 thead .header-row th {
-  position: sticky;
-  top: 0;
-  z-index: 3;
   padding: 0;
   vertical-align: top;
   border-right: 1px solid $border-header;
@@ -64,7 +83,6 @@ thead .header-row th {
 
   &:first-child {
     border-left: 1px solid $border-header;
-    z-index: 4; // subject header stays above student headers
   }
 }
 
@@ -136,7 +154,7 @@ thead .header-row th {
   flex-shrink: 0;
   overflow: hidden;
 
-  // Sub-column dividers for rows that have 3 spans
+  // Sub-column dividers (terms / pcts / levels)
   span {
     flex: 1;
     display: flex;
@@ -152,6 +170,12 @@ thead .header-row th {
       border-right: none;
     }
   }
+
+  // Fixed-width placeholder for the icon column in header sub-rows
+  .sh-icon-col {
+    flex: 0 0 $col-icon-w;
+    width: $col-icon-w;
+  }
 }
 
 .sh-name {
@@ -160,6 +184,40 @@ thead .header-row th {
   font-size: 13px;
   font-weight: 600;
   border-bottom: 1px solid $border-header;
+  gap: 6px;
+  padding: 0 6px;
+
+  .sh-name-text {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+  }
+}
+
+.sh-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+  color: $header-text;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.15s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  svg {
+    display: block;
+  }
 }
 
 .sh-terms {
@@ -209,6 +267,10 @@ tbody {
     td:first-child {
       border-left: 1px solid $border-body;
     }
+
+    &:first-child td {
+      border-top: 1px solid $border-body;
+    }
   }
 
   // ── Category cell (rotated label, spans N rows) ───────────────────────────
@@ -231,6 +293,7 @@ tbody {
       text-transform: uppercase;
       letter-spacing: 1px;
       padding: 6px 0;
+      margin: 0 auto;
     }
   }
 
@@ -242,6 +305,33 @@ tbody {
     color: #2d3748;
     background: $subject-bg;
     border-right: 2px solid $border-body;
+  }
+
+  // ── Row action icon cell ─────────────────────────────────────────────────
+  .row-icon-cell {
+    text-align: center;
+    vertical-align: middle;
+    padding: 0;
+  }
+
+  .row-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    background: none;
+    border: none;
+    border-radius: 4px;
+    color: #888;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.15s, color 0.15s;
+
+    &:hover {
+      background: #e8e8e8;
+      color: #333;
+    }
   }
 
   // ── Mark input cell ───────────────────────────────────────────────────────
