@@ -59,8 +59,8 @@
         @for (profile of displayProfiles; track profile.id; let isLast = $last) {
           <!-- Row 1: profile name (rowspan=2) + level labels per student -->
           <tr class="row-labels">
-            <td rowspan="2" class="profile-cell" [title]="profile.name">
-              <span class="profile-name">{{ profile.name }}</span>
+            <td rowspan="2" class="profile-cell">
+              <span class="profile-name" (mouseenter)="setProfileTooltip($event, profile.name)">{{ profile.name }}</span>
             </td>
             @for (student of students; track student.id; let isLastStu = $last) {
               <td class="label-cell basic-label">Basic</td>

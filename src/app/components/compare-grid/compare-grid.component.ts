@@ -80,6 +80,11 @@ export class CompareGridComponent implements OnInit, OnChanges, AfterViewInit, O
     this.updateDisplayProfiles();
   }
 
+  setProfileTooltip(event: MouseEvent, name: string): void {
+    const el = event.target as HTMLElement;
+    el.title = el.scrollHeight > el.clientHeight ? name : '';
+  }
+
   changeClass(value: string): string {
     if (value.startsWith('+')) return 'change-pos';
     if (value.startsWith('-')) return 'change-neg';

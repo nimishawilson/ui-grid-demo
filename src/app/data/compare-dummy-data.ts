@@ -11,7 +11,7 @@ export const COMPARE_DATA: CompareData = {
   skillProfiles: [
     {
       id: 'sp1',
-      name: 'Communication Skills',
+      name: 'Communication_Skills_sdfkskdf_pp_testdftsdsndfsnk',
       entries: [
         { studentId: 's1', basicValue: '+1 level', advancedValue: 88, expertValue: 82 },
         { studentId: 's2', basicValue: 'No change', advancedValue: 74, expertValue: 68 },
