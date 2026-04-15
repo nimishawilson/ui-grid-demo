@@ -71,9 +71,25 @@
           <!-- Row 2: data values per student -->
           <tr class="row-values" [class.profile-sep]="!isLast">
             @for (student of students; track student.id; let isLastStu = $last) {
-              <td class="val-cell change-cell" [class]="'val-cell change-cell ' + changeClass(getEntry(profile.id, student.id).basicValue)">{{ getEntry(profile.id, student.id).basicValue }}</td>
-              <td class="val-cell">{{ getEntry(profile.id, student.id).advancedValue ?? '—' }}</td>
-              <td class="val-cell" [class.stu-sep]="!isLastStu">{{ getEntry(profile.id, student.id).expertValue ?? '—' }}</td>
+              <td
+                [class]="'val-cell change-cell ' + changeClass(getEntry(profile.id, student.id).basicValue)"
+                [class.has-note]="!!getEntry(profile.id, student.id).note"
+                (mouseenter)="onCellEnter($event, profile.id, student.id)"
+                (mouseleave)="onCellLeave()"
+              >{{ getEntry(profile.id, student.id).basicValue }}</td>
+              <td
+                class="val-cell"
+                [class.has-note]="!!getEntry(profile.id, student.id).note"
+                (mouseenter)="onCellEnter($event, profile.id, student.id)"
+                (mouseleave)="onCellLeave()"
+              >{{ getEntry(profile.id, student.id).advancedValue ?? '—' }}</td>
+              <td
+                class="val-cell"
+                [class.has-note]="!!getEntry(profile.id, student.id).note"
+                [class.stu-sep]="!isLastStu"
+                (mouseenter)="onCellEnter($event, profile.id, student.id)"
+                (mouseleave)="onCellLeave()"
+              >{{ getEntry(profile.id, student.id).expertValue ?? '—' }}</td>
             }
           </tr>
         }
@@ -81,3 +97,11 @@
     </table>
   </div>
 </div>
+
+<app-notes-popover
+  [visible]="noteVisible"
+  [note]="activeNote"
+  [triggerEl]="activeTriggerEl"
+  (popoverEnter)="onPopoverEnter()"
+  (popoverLeave)="onPopoverLeave()"
+/>
