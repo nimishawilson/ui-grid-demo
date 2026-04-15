@@ -1,5 +1,6 @@
 <div class="grid-wrapper">
-  <div class="scroll-container">
+  <!-- ── Fixed header (outside scroll) ── -->
+  <div class="header-area" #headerArea>
     <table class="compare-grid">
       <colgroup>
         <col class="col-profile">
@@ -9,8 +10,6 @@
           <col class="col-sub">
         }
       </colgroup>
-
-      <!-- ── Sticky header ── -->
       <thead>
         <tr>
           <th class="th-profiles">
@@ -42,8 +41,20 @@
           }
         </tr>
       </thead>
+    </table>
+  </div>
 
-      <!-- ── Scrollable body ── -->
+  <!-- ── Scrollable body only ── -->
+  <div class="body-scroll" #bodyScroll>
+    <table class="compare-grid">
+      <colgroup>
+        <col class="col-profile">
+        @for (student of students; track student.id) {
+          <col class="col-sub">
+          <col class="col-sub">
+          <col class="col-sub">
+        }
+      </colgroup>
       <tbody>
         @for (profile of displayProfiles; track profile.id; let isLast = $last) {
           <!-- Row 1: profile name (rowspan=2) + level labels per student -->

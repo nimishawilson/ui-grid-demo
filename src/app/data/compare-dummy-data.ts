@@ -96,6 +96,39 @@ export const COMPARE_DATA: CompareData = {
         { studentId: 's4', basicValue: '+1 level',  advancedValue: 65, expertValue: 59 },
         { studentId: 's5', basicValue: '+2 levels', advancedValue: 97, expertValue: 92 }
       ]
+    },
+     {
+      id: 'sp8',
+      name: 'Digital Literacy',
+      entries: [
+        { studentId: 's1', basicValue: '+1 level',  advancedValue: 89, expertValue: 83 },
+        { studentId: 's2', basicValue: 'No change', advancedValue: 75, expertValue: 69 },
+        { studentId: 's3', basicValue: '+1 level',  advancedValue: 92, expertValue: 88 },
+        { studentId: 's4', basicValue: '+1 level',  advancedValue: 65, expertValue: 59 },
+        { studentId: 's5', basicValue: '+2 levels', advancedValue: 97, expertValue: 92 }
+      ]
+    },
+     {
+      id: 'sp8',
+      name: 'Digital Literacy',
+      entries: [
+        { studentId: 's1', basicValue: '+1 level',  advancedValue: 89, expertValue: 83 },
+        { studentId: 's2', basicValue: 'No change', advancedValue: 75, expertValue: 69 },
+        { studentId: 's3', basicValue: '+1 level',  advancedValue: 92, expertValue: 88 },
+        { studentId: 's4', basicValue: '+1 level',  advancedValue: 65, expertValue: 59 },
+        { studentId: 's5', basicValue: '+2 levels', advancedValue: 97, expertValue: 92 }
+      ]
+    },
+     {
+      id: 'sp8',
+      name: 'Digital Literacy',
+      entries: [
+        { studentId: 's1', basicValue: '+1 level',  advancedValue: 89, expertValue: 83 },
+        { studentId: 's2', basicValue: 'No change', advancedValue: 75, expertValue: 69 },
+        { studentId: 's3', basicValue: '+1 level',  advancedValue: 92, expertValue: 88 },
+        { studentId: 's4', basicValue: '+1 level',  advancedValue: 65, expertValue: 59 },
+        { studentId: 's5', basicValue: '+2 levels', advancedValue: 97, expertValue: 92 }
+      ]
     }
   ]
 };

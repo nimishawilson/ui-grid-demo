@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { CompareStudent, SkillProfile, SkillProfileEntry } from '../../models/compare.models';
 
 type SortDirection = 'none' | 'asc' | 'desc';
@@ -10,7 +10,9 @@ type SortDirection = 'none' | 'asc' | 'desc';
   templateUrl: './compare-grid.component.html',
   styleUrl: './compare-grid.component.scss'
 })
-export class CompareGridComponent implements OnInit, OnChanges {
+export class CompareGridComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+  @ViewChild('headerArea') private headerAreaRef!: ElementRef<HTMLDivElement>;
+  @ViewChild('bodyScroll') private bodyScrollRef!: ElementRef<HTMLDivElement>;
   @Input() students: CompareStudent[] = [];
   @Input() skillProfiles: SkillProfile[] = [];
 
@@ -18,6 +20,29 @@ export class CompareGridComponent implements OnInit, OnChanges {
   displayProfiles: SkillProfile[] = [];
 
   private entriesMap: { [profileId: string]: { [studentId: string]: SkillProfileEntry } } = {};
+
+  private resizeObserver?: ResizeObserver;
+
+  private readonly syncScroll = (): void => {
+    this.headerAreaRef.nativeElement.scrollLeft = this.bodyScrollRef.nativeElement.scrollLeft;
+  };
+
+  private readonly syncScrollbarGutter = (): void => {
+    const body = this.bodyScrollRef.nativeElement;
+    const gutterWidth = body.offsetWidth - body.clientWidth;
+    this.headerAreaRef.nativeElement.style.paddingRight = `${gutterWidth}px`;
+  };
+
+  ngAfterViewInit(): void {
+    this.bodyScrollRef.nativeElement.addEventListener('scroll', this.syncScroll);
+    this.resizeObserver = new ResizeObserver(this.syncScrollbarGutter);
+    this.resizeObserver.observe(this.bodyScrollRef.nativeElement);
+  }
+
+  ngOnDestroy(): void {
+    this.bodyScrollRef.nativeElement.removeEventListener('scroll', this.syncScroll);
+    this.resizeObserver?.disconnect();
+  }
 
   get sortIcon(): string {
     if (this.sortDirection === 'asc') return '↑';
