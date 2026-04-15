@@ -1,0 +1,83 @@
+<div class="grid-wrapper" [style.max-width]="gridMaxWidth">
+  <!-- ── Fixed header (outside scroll) ── -->
+  <div class="header-area" #headerArea>
+    <table class="compare-grid">
+      <colgroup>
+        <col class="col-profile">
+        @for (student of students; track student.id) {
+          <col class="col-sub">
+          <col class="col-sub">
+          <col class="col-sub">
+        }
+      </colgroup>
+      <thead>
+        <tr>
+          <th class="th-profiles">
+            <div class="profiles-header-content">
+              <span class="profiles-label">Skill Profiles</span>
+              <button class="sort-btn" (click)="toggleSort()" [title]="sortTitle" [attr.aria-label]="sortTitle">
+                <span class="sort-icon">{{ sortIcon }}</span>
+              </button>
+            </div>
+          </th>
+          @for (student of students; track student.id) {
+            <th colspan="3" class="th-student">
+              <div class="student-name-content">
+                <span class="sn-text">{{ student.name }}</span>
+                <button class="icon-btn" title="Edit student">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                  </svg>
+                </button>
+                <button class="icon-btn" title="View student">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                  </svg>
+                </button>
+              </div>
+            </th>
+          }
+        </tr>
+      </thead>
+    </table>
+  </div>
+
+  <!-- ── Scrollable body only ── -->
+  <div class="body-scroll" #bodyScroll>
+    <table class="compare-grid">
+      <colgroup>
+        <col class="col-profile">
+        @for (student of students; track student.id) {
+          <col class="col-sub">
+          <col class="col-sub">
+          <col class="col-sub">
+        }
+      </colgroup>
+      <tbody>
+        @for (profile of displayProfiles; track profile.id; let isLast = $last) {
+          <!-- Row 1: profile name (rowspan=2) + level labels per student -->
+          <tr class="row-labels">
+            <td rowspan="2" class="profile-cell">
+              <span class="profile-name" (mouseenter)="setProfileTooltip($event, profile.name)">{{ profile.name }}</span>
+            </td>
+            @for (student of students; track student.id; let isLastStu = $last) {
+              <td class="label-cell basic-label">Basic</td>
+              <td class="label-cell adv-label">Advanced</td>
+              <td class="label-cell exp-label" [class.stu-sep]="!isLastStu">Expert</td>
+            }
+          </tr>
+          <!-- Row 2: data values per student -->
+          <tr class="row-values" [class.profile-sep]="!isLast">
+            @for (student of students; track student.id; let isLastStu = $last) {
+              <td class="val-cell change-cell" [class]="'val-cell change-cell ' + changeClass(getEntry(profile.id, student.id).basicValue)">{{ getEntry(profile.id, student.id).basicValue }}</td>
+              <td class="val-cell">{{ getEntry(profile.id, student.id).advancedValue ?? '—' }}</td>
+              <td class="val-cell" [class.stu-sep]="!isLastStu">{{ getEntry(profile.id, student.id).expertValue ?? '—' }}</td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

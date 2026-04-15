@@ -1,0 +1,252 @@
+// ── Variables ──────────────────────────────────────────────────────────────────
+$header-h:      52px;
+$row-label-h:   34px;
+$row-val-h:     32px;
+
+$header-bg:     #3a3a3a;
+$header-text:   #ffffff;
+$border-hdr:    #2a2a2a;
+$border-body:   #dcdcdc;
+$border-stu:    #3a3a3a;   // thicker right border between student groups
+$profile-bg:    #fafafa;
+$label-row-bg:  #f4f6f8;
+$val-row-bg:    #ffffff;
+$row-hover:     #f0f4f8;
+
+$col-profile-w: 180px;
+
+// Level badge palette
+$basic-bg:   #dbeafe;  $basic-text:  #1d4ed8;
+$adv-bg:     #fef3c7;  $adv-text:    #92400e;
+$exp-bg:     #dcfce7;  $exp-text:    #15803d;
+
+// Change label palette
+$pos-text:  #15803d;   // green for "+N levels"
+$neg-text:  #b91c1c;   // red   for "-N levels"
+$neu-text:  #6b7280;   // grey  for "No change"
+
+// ── Layout ─────────────────────────────────────────────────────────────────────
+.grid-wrapper {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.header-area {
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.body-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+// ── Table ──────────────────────────────────────────────────────────────────────
+.compare-grid {
+  width: auto;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 13px;
+  font-family: inherit;
+}
+
+// ── Column widths ──────────────────────────────────────────────────────────────
+$col-sub-w: 80px;
+
+.col-profile { width: $col-profile-w; }
+.col-sub     { width: $col-sub-w; }
+
+// ── Header ─────────────────────────────────────────────────────────────────────
+thead th {
+  padding: 0;
+  height: $header-h;
+  background: $header-bg;
+  color: $header-text;
+  border-right: 1px solid $border-hdr;
+  border-top: 1px solid $border-hdr;
+  border-bottom: 1px solid $border-hdr;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: middle;
+  text-align: center;
+
+  &:first-child {
+    border-left: 1px solid $border-hdr;
+    text-align: left;
+  }
+}
+
+// "Skill Profiles" header cell
+.th-profiles {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.profiles-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  height: 100%;
+  gap: 8px;
+
+  .profiles-label {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+  }
+}
+
+// Student header cell (colspan=3)
+.th-student {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.student-name-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  gap: 6px;
+  height: 100%;
+
+  .sn-text {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+  }
+}
+
+// Sort and icon buttons
+.sort-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: $header-text;
+  cursor: pointer;
+  border-radius: 4px;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  transition: background 0.15s;
+
+  &:hover { background: rgba(255, 255, 255, 0.28); }
+
+  .sort-icon { font-size: 14px; line-height: 1; }
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+  color: $header-text;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.15s;
+
+  &:hover { background: rgba(255, 255, 255, 0.28); }
+  svg { display: block; }
+}
+
+// ── Body ───────────────────────────────────────────────────────────────────────
+tbody tr:hover td { background-color: $row-hover; }
+
+// Profile name cell (rowspan=2 — spans both label and values rows)
+.profile-cell {
+  background: $profile-bg;
+  border-left: 1px solid $border-body;
+  border-right: 2px solid $border-stu;
+  border-bottom: 1px solid $border-body;
+  border-top: 1px solid $border-body;
+  padding: 8px 10px;
+  vertical-align: middle;
+
+  .profile-name {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 13px;
+    font-weight: 600;
+    color: #2d3748;
+    line-height: 1.4;
+    word-break: break-word;
+  }
+}
+
+// Common td styles
+tbody td {
+  border-right: 1px solid $border-body;
+  border-bottom: 1px solid $border-body;
+  padding: 0;
+  text-align: center;
+  vertical-align: middle;
+}
+
+// Thicker right border to visually separate student groups
+td.stu-sep {
+  border-right: 2px solid $border-stu;
+}
+
+// ── Row: level labels (Basic / Advanced / Expert) ──────────────────────────────
+.row-labels {
+  height: $row-label-h;
+
+  .label-cell {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    background: $label-row-bg;
+  }
+
+  .basic-label,
+  .adv-label,
+  .exp-label {
+    color: #374151;
+    background: $label-row-bg;
+  }
+}
+
+// ── Row: data values ───────────────────────────────────────────────────────────
+.row-values {
+  height: $row-val-h;
+
+  .val-cell {
+    font-size: 12px;
+    color: #374151;
+    background: $val-row-bg;
+  }
+}
+
+// Thicker bottom border separating profile groups
+.row-values.profile-sep td {
+  border-bottom: 2px solid #c0c8d4;
+}
+
+// Change-level cell coloring
+.change-cell {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.change-pos { color: $pos-text; }
+.change-neg { color: $neg-text; }
+.change-neu { color: $neu-text; }
