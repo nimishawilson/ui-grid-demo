@@ -305,6 +305,9 @@ tbody {
     color: #2d3748;
     background: $subject-bg;
     border-right: 2px solid $border-body;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   // ── Row action icon cell ─────────────────────────────────────────────────

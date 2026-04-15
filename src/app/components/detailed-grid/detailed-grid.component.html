@@ -93,8 +93,8 @@
                 </td>
               }
               <td class="subject-cell"
-                  [title]="truncateTooltip(subject.name)">
-                {{ truncate(subject.name) }}
+                  (mouseenter)="setSubjectTooltip($event, subject.name)">
+                {{ subject.name }}
               </td>
               @for (student of students; track student.id) {
                 <td class="mark-cell">
