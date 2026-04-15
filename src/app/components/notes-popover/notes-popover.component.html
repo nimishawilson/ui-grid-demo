@@ -1,0 +1,17 @@
+@if (visible && note) {
+  <div
+    class="notes-popover"
+    [style.top.px]="top"
+    [style.left.px]="left"
+    role="tooltip"
+    aria-live="polite"
+    (mouseenter)="popoverEnter.emit()"
+    (mouseleave)="popoverLeave.emit()"
+  >
+    <div class="popover-header">
+      <span class="popover-title">Notes</span>
+      <span class="popover-date">{{ note.date }}</span>
+    </div>
+    <div class="popover-content">{{ note.content }}</div>
+  </div>
+}

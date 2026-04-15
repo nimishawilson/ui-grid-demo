@@ -1,0 +1,80 @@
+// ── Variables ─────────────────────────────────────────────────────────────────
+$popover-w:      240px;
+$popover-h:      200px;
+$yellow-strip:   #F5A623;
+$border-radius:  6px;
+$shadow:         0 4px 20px rgba(0, 0, 0, 0.14), 0 1px 6px rgba(0, 0, 0, 0.08);
+
+// ── Host: zero-size fixed anchor so the popover can escape any overflow ───────
+:host {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+// ── Popover card ──────────────────────────────────────────────────────────────
+.notes-popover {
+  position: fixed;
+  width: $popover-w;
+  min-height: $popover-h;
+  background: #ffffff;
+  border-radius: $border-radius;
+  box-shadow: $shadow;
+  border-top: 4px solid $yellow-strip;
+  pointer-events: all;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: popover-in 120ms ease-out;
+}
+
+// ── Header row: "Notes" left · date right ────────────────────────────────────
+.popover-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px 9px;
+  border-bottom: 1px solid #f0f0f0;
+  flex-shrink: 0;
+}
+
+.popover-title {
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #2d3748;
+}
+
+.popover-date {
+  font-size: 11px;
+  color: #718096;
+}
+
+// ── Body text ─────────────────────────────────────────────────────────────────
+.popover-content {
+  padding: 10px 14px 12px;
+  font-size: 12px;
+  color: #4a5568;
+  line-height: 1.6;
+  flex: 1;
+  word-break: break-word;
+  overflow-y: auto;
+}
+
+// ── Entrance animation ────────────────────────────────────────────────────────
+@keyframes popover-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
