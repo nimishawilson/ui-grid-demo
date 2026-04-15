@@ -1,12 +1,14 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { CompareStudent, SkillProfile, SkillProfileEntry } from '../../models/compare.models';
+import { NoteData } from '../../models/grid.models';
+import { NotesPopoverComponent } from '../notes-popover/notes-popover.component';
 
 type SortDirection = 'none' | 'asc' | 'desc';
 
 @Component({
   selector: 'app-compare-grid',
   standalone: true,
-  imports: [],
+  imports: [NotesPopoverComponent],
   templateUrl: './compare-grid.component.html',
   styleUrl: './compare-grid.component.scss'
 })
@@ -20,6 +22,12 @@ export class CompareGridComponent implements OnInit, OnChanges, AfterViewInit, O
   displayProfiles: SkillProfile[] = [];
 
   private entriesMap: { [profileId: string]: { [studentId: string]: SkillProfileEntry } } = {};
+
+  // ── Notes popover hover state ───────────────────────────────────────────────
+  noteVisible = false;
+  activeNote: NoteData | null = null;
+  activeTriggerEl: HTMLElement | null = null;
+  private hideTimer?: ReturnType<typeof setTimeout>;
 
   private resizeObserver?: ResizeObserver;
 
@@ -42,6 +50,28 @@ export class CompareGridComponent implements OnInit, OnChanges, AfterViewInit, O
   ngOnDestroy(): void {
     this.bodyScrollRef.nativeElement.removeEventListener('scroll', this.syncScroll);
     this.resizeObserver?.disconnect();
+    clearTimeout(this.hideTimer);
+  }
+
+  onCellEnter(event: MouseEvent, profileId: string, studentId: string): void {
+    const entry = this.getEntry(profileId, studentId);
+    if (!entry.note) return;
+    clearTimeout(this.hideTimer);
+    this.activeTriggerEl = event.currentTarget as HTMLElement;
+    this.activeNote = entry.note;
+    this.noteVisible = true;
+  }
+
+  onCellLeave(): void {
+    this.hideTimer = setTimeout(() => { this.noteVisible = false; }, 200);
+  }
+
+  onPopoverEnter(): void {
+    clearTimeout(this.hideTimer);
+  }
+
+  onPopoverLeave(): void {
+    this.hideTimer = setTimeout(() => { this.noteVisible = false; }, 200);
   }
 
   get gridMaxWidth(): string {

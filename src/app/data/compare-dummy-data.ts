@@ -13,10 +13,10 @@ export const COMPARE_DATA: CompareData = {
       id: 'sp1',
       name: 'Communication_Skills_sdfkskdf_pp_testdftsdsndfsnk',
       entries: [
-        { studentId: 's1', basicValue: '+1 level', advancedValue: 88, expertValue: 82 },
+        { studentId: 's1', basicValue: '+1 level', advancedValue: 88, expertValue: 82, note: { date: 'Apr 10, 2026', content: 'Alice showed strong verbal articulation during group presentations. Recommend additional written exercises.' } },
         { studentId: 's2', basicValue: 'No change', advancedValue: 74, expertValue: 68 },
-        { studentId: 's3', basicValue: '+2 levels', advancedValue: 93, expertValue: 88 },
-        { studentId: 's4', basicValue: '-1 level',  advancedValue: 61, expertValue: 55 },
+        { studentId: 's3', basicValue: '+2 levels', advancedValue: 93, expertValue: 88, note: { date: 'Apr 12, 2026', content: 'Exceptional progress. Carol leads class discussions confidently and adapts her style to different audiences.' } },
+        { studentId: 's4', basicValue: '-1 level',  advancedValue: 61, expertValue: 55, note: { date: 'Apr 8, 2026',  content: 'David struggles with active listening. Needs follow-up sessions focused on two-way communication.' } },
         { studentId: 's5', basicValue: '+2 levels', advancedValue: 96, expertValue: 91 }
       ]
     },
@@ -36,7 +36,7 @@ export const COMPARE_DATA: CompareData = {
       name: 'Leadership',
       entries: [
         { studentId: 's1', basicValue: '+2 levels', advancedValue: 90, expertValue: 85 },
-        { studentId: 's2', basicValue: 'No change', advancedValue: 72, expertValue: 65 },
+        { studentId: 's2', basicValue: 'No change', advancedValue: 72, expertValue: 65, note: { date: 'Mar 28, 2026', content: 'Bob shows reluctance to take initiative in group settings. Confidence-building activities recommended.' } },
         { studentId: 's3', basicValue: '+1 level',  advancedValue: 89, expertValue: 84 },
         { studentId: 's4', basicValue: '-1 level',  advancedValue: 58, expertValue: 52 },
         { studentId: 's5', basicValue: '+2 levels', advancedValue: 97, expertValue: 93 }
