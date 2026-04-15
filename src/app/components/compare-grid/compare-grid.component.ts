@@ -44,6 +44,11 @@ export class CompareGridComponent implements OnInit, OnChanges, AfterViewInit, O
     this.resizeObserver?.disconnect();
   }
 
+  get gridMaxWidth(): string {
+    const tableWidth = 180 + this.students.length * 3 * 80;
+    return `${tableWidth}px`;
+  }
+
   get sortIcon(): string {
     if (this.sortDirection === 'asc') return '↑';
     if (this.sortDirection === 'desc') return '↓';
