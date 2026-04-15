@@ -57,7 +57,7 @@ $cat-sep-color:   #3a3a3a;
 
 // ── Table base ────────────────────────────────────────────────────────────────
 .detail-grid {
-  width: 100%;
+  width: auto;
   table-layout: fixed;
   border-collapse: separate;
   border-spacing: 0;
@@ -67,28 +67,47 @@ $cat-sep-color:   #3a3a3a;
 
 // ── Column widths ─────────────────────────────────────────────────────────────
 $col-icon-w: 30px;
+$col-mark-w: 65px;
 
 .col-category { width: 36px; }
 .col-subject  { width: 140px; }
-.col-mark     { /* equal share of remaining width */ }
+.col-mark     { width: $col-mark-w; }
 .col-icon     { width: $col-icon-w; }
 
-// ── Header row ───────────────────────────────────────────────────────────────
-thead .header-row th {
+// ── Header: all th cells ──────────────────────────────────────────────────────
+// Each <th> is a real table cell — the table layout engine positions them in
+// the exact same column slots as the body <td>s, giving pixel-perfect alignment
+// without any flexbox math.
+thead th {
   padding: 0;
-  vertical-align: top;
+  vertical-align: middle;
+  text-align: center;
   border-right: 1px solid $border-header;
   border-bottom: 1px solid $border-header;
-  border-top: 1px solid $border-header;
-
-  &:first-child {
-    border-left: 1px solid $border-header;
-  }
+  overflow: hidden;
+  white-space: nowrap;
 }
 
-// ── Subject header cell ───────────────────────────────────────────────────────
+thead tr.hr-name th {
+  border-top: 1px solid $border-header;
+}
+
+// ── Row heights ────────────────────────────────────────────────────────────────
+thead tr.hr-name   { height: $sh-name-h; }
+thead tr.hr-terms  { height: $sh-terms-h; }
+thead tr.hr-pcts   { height: $sh-pcts-h; }
+thead tr.hr-levels { height: $sh-levels-h; }
+
+// ── Row background colours ─────────────────────────────────────────────────────
+thead tr.hr-terms  th { background: $header-bg-2; color: $header-text; }
+thead tr.hr-pcts   th { background: $header-bg-3; color: $header-subtext; }
+thead tr.hr-levels th { background: $header-bg-4; color: $header-text; }
+
+// ── Subject header (rowspan=4, colspan=2) ─────────────────────────────────────
 .subject-header {
   background: $header-bg-1;
+  border-left: 1px solid $border-header;
+  // bottom border comes from the general thead th rule, placed at the end of row 4
 }
 
 .subject-header-content {
@@ -96,8 +115,7 @@ thead .header-row th {
   align-items: center;
   justify-content: space-between;
   padding: 0 10px;
-  height: $header-h;
-  background: $header-bg-1;
+  height: 100%;
   color: $header-text;
   gap: 8px;
 
@@ -132,62 +150,22 @@ thead .header-row th {
   }
 }
 
-// ── Student header cell (colspan=3) ──────────────────────────────────────────
-.student-header {
+// ── Student name cells (row 1, colspan=4) ─────────────────────────────────────
+thead th.th-student-name {
   background: $header-bg-1;
   color: $header-text;
-  overflow: hidden;
-}
-
-.student-header-inner {
-  display: flex;
-  flex-direction: column;
-  height: $header-h;
-  color: $header-text;
-}
-
-// Shared row styles
-.sh-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  overflow: hidden;
-
-  // Sub-column dividers (terms / pcts / levels)
-  span {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    border-right: 1px solid $border-header;
-
-    &:last-child {
-      border-right: none;
-    }
-  }
-
-  // Fixed-width placeholder for the icon column in header sub-rows
-  .sh-icon-col {
-    flex: 0 0 $col-icon-w;
-    width: $col-icon-w;
-  }
-}
-
-.sh-name {
-  height: $sh-name-h;
-  background: $header-bg-1;
   font-size: 13px;
   font-weight: 600;
-  border-bottom: 1px solid $border-header;
-  gap: 6px;
-  padding: 0 6px;
+}
 
-  .sh-name-text {
+.student-name-content {
+  display: flex;
+  align-items: center;
+  padding: 0 6px;
+  gap: 6px;
+  height: 100%;
+
+  .sn-text {
     flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -196,6 +174,7 @@ thead .header-row th {
   }
 }
 
+// ── Icon buttons (edit / view) ─────────────────────────────────────────────────
 .sh-icon-btn {
   display: inline-flex;
   align-items: center;
@@ -220,26 +199,18 @@ thead .header-row th {
   }
 }
 
-.sh-terms {
-  height: $sh-terms-h;
-  background: $header-bg-2;
+// ── Term / Pct / Level cells ───────────────────────────────────────────────────
+thead th.th-term {
   font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.3px;
-  border-bottom: 1px solid $border-header;
 }
 
-.sh-pcts {
-  height: $sh-pcts-h;
-  background: $header-bg-3;
+thead th.th-pct {
   font-size: 11px;
-  color: $header-subtext;
-  border-bottom: 1px solid $border-header;
 }
 
-.sh-levels {
-  height: $sh-levels-h;
-  background: $header-bg-4;
+thead th.th-level {
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
