@@ -98,8 +98,8 @@ export const COMPARE_DATA: CompareData = {
       ]
     },
      {
-      id: 'sp8',
-      name: 'Digital Literacy',
+      id: 'sp9',
+      name: 'Emotional Intelligence',
       entries: [
         { studentId: 's1', basicValue: '+1 level',  advancedValue: 89, expertValue: 83 },
         { studentId: 's2', basicValue: 'No change', advancedValue: 75, expertValue: 69 },
@@ -109,8 +109,8 @@ export const COMPARE_DATA: CompareData = {
       ]
     },
      {
-      id: 'sp8',
-      name: 'Digital Literacy',
+      id: 'sp10',
+      name: 'Research & Analysis',
       entries: [
         { studentId: 's1', basicValue: '+1 level',  advancedValue: 89, expertValue: 83 },
         { studentId: 's2', basicValue: 'No change', advancedValue: 75, expertValue: 69 },
@@ -120,8 +120,8 @@ export const COMPARE_DATA: CompareData = {
       ]
     },
      {
-      id: 'sp8',
-      name: 'Digital Literacy',
+      id: 'sp11',
+      name: 'Adaptability',
       entries: [
         { studentId: 's1', basicValue: '+1 level',  advancedValue: 89, expertValue: 83 },
         { studentId: 's2', basicValue: 'No change', advancedValue: 75, expertValue: 69 },
