@@ -9,6 +9,13 @@ export const routes: Routes = [
       )
   },
   {
+    path: 'compare-view',
+    loadComponent: () =>
+      import('./pages/compare-view/compare-view.component').then(
+        m => m.CompareViewComponent
+      )
+  },
+  {
     path: '',
     redirectTo: 'detailed-view',
     pathMatch: 'full'
