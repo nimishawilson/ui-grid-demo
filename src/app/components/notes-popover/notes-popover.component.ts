@@ -31,7 +31,7 @@ export class NotesPopoverComponent implements OnChanges {
   placement: Placement = 'bottom-right';
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['visible'] && this.visible) {
+    if (this.visible && (changes['visible'] || changes['triggerEl'])) {
       this.computePosition();
     }
   }
