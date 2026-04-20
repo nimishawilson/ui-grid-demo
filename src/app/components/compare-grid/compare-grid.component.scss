@@ -250,3 +250,23 @@ td.stu-sep {
 .change-pos { color: $pos-text; }
 .change-neg { color: $neg-text; }
 .change-neu { color: $neu-text; }
+
+// ── Note indicator ─────────────────────────────────────────────────────────────
+// Cells with an attached note show a small yellow dot in the top-right corner.
+// Hovering triggers the notes popover.
+.has-note {
+  position: relative;
+  cursor: default;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 5px;
+    height: 5px;
+    background: #F5A623;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+}

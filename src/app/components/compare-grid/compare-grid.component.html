@@ -63,17 +63,26 @@
               <span class="profile-name" (mouseenter)="setProfileTooltip($event, profile.name)">{{ profile.name }}</span>
             </td>
             @for (student of students; track student.id; let isLastStu = $last) {
-              <td class="label-cell basic-label">Basic</td>
-              <td class="label-cell adv-label">Advanced</td>
-              <td class="label-cell exp-label" [class.stu-sep]="!isLastStu">Expert</td>
+              <td class="label-cell basic-label" (mouseenter)="onCellEnter($event, profile.id, student.id)"
+                (mouseleave)="onCellLeave()">Basic</td>
+              <td class="label-cell adv-label" (mouseenter)="onCellEnter($event, profile.id, student.id)"
+                (mouseleave)="onCellLeave()">Advanced</td>
+              <td class="label-cell exp-label" (mouseenter)="onCellEnter($event, profile.id, student.id)"
+                (mouseleave)="onCellLeave()" [class.stu-sep]="!isLastStu">Expert</td>
             }
           </tr>
           <!-- Row 2: data values per student -->
           <tr class="row-values" [class.profile-sep]="!isLast">
             @for (student of students; track student.id; let isLastStu = $last) {
-              <td class="val-cell change-cell" [class]="'val-cell change-cell ' + changeClass(getEntry(profile.id, student.id).basicValue)">{{ getEntry(profile.id, student.id).basicValue }}</td>
-              <td class="val-cell">{{ getEntry(profile.id, student.id).advancedValue ?? '—' }}</td>
-              <td class="val-cell" [class.stu-sep]="!isLastStu">{{ getEntry(profile.id, student.id).expertValue ?? '—' }}</td>
+              <td
+                [class]="'val-cell change-cell ' + changeClass(getEntry(profile.id, student.id).basicValue)"
+                >{{ getEntry(profile.id, student.id).basicValue }}</td>
+              <td
+                class="val-cell">{{ getEntry(profile.id, student.id).advancedValue ?? '—' }}</td>
+              <td
+                class="val-cell"
+                
+                [class.stu-sep]="!isLastStu">{{ getEntry(profile.id, student.id).expertValue ?? '—' }}</td>
             }
           </tr>
         }
@@ -81,3 +90,11 @@
     </table>
   </div>
 </div>
+
+<app-notes-popover
+  [visible]="noteVisible"
+  [note]="activeNote"
+  [triggerEl]="activeTriggerEl"
+  (popoverEnter)="onPopoverEnter()"
+  (popoverLeave)="onPopoverLeave()"
+/>

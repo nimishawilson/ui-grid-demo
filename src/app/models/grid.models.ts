@@ -33,3 +33,8 @@ export interface GridData {
   students: Student[];
   categories: Category[];
 }
+
+export interface NoteData {
+  date: string;    // e.g. "Apr 16, 2026"
+  content: string;
+}
