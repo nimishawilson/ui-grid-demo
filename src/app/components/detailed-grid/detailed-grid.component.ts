@@ -77,6 +77,11 @@ export class DetailedGridComponent implements OnChanges, OnInit {
     return name.length > this.maxLabelChars ? name : '';
   }
 
+  setSubjectTooltip(event: MouseEvent, name: string): void {
+    const el = event.target as HTMLElement;
+    el.title = el.scrollWidth > el.offsetWidth ? name : '';
+  }
+
   getMark(subjectId: string, studentId: string): SubjectMark {
     if (!this.marksMap[subjectId]) {
       this.marksMap[subjectId] = {};
